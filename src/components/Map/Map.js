@@ -2,8 +2,20 @@ import React from 'react'
 import * as topojson from 'topojson'
 import * as d3 from 'd3';
 import './Map.css';
+import { withStyles } from '@material-ui/core/styles'
 
-export default class Map extends React.Component {
+const styles = theme => ({
+    wrapper: {
+      position: 'relative',
+      paddingTop: theme.spacing(2),
+      paddingLeft: theme.spacing(2)
+    },
+    map: {
+      position: 'absolute'
+    }
+  });
+
+class Map extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -35,15 +47,9 @@ export default class Map extends React.Component {
 
 
 
-    componentDidUpdate(){
-        let {width, height, margin} = this.props
-        console.log("W IS ", width)
-        console.log("H IS ", height)
-        console.log("M IS ", margin)
-
-
+    componentDidUpdate(prevProps){
         let svg = d3.selectAll("#anchor")
-            .attr("transform", `translate(${margin.left},${margin.top})`)
+            // .attr("transform", `translate(0,${window.innerHeight/4})`)
         
         let sortedData = this.state.filteredData.sort((a, b) => {return a.happinessRank-b.happinessRank})
 
@@ -54,7 +60,6 @@ export default class Map extends React.Component {
         // .interpolate(d3.interpolateHsl);
         
         let projection = d3.geoMercator()
-            .translate([width/2, height/2])
             .scale(100)
         
         let path = d3.geoPath()
@@ -77,17 +82,18 @@ export default class Map extends React.Component {
             })
             .on('mouseout', function(d) {d3.select(this).classed("selected", false)})
             .on('click', function(d) {
-                console.log(d.properties.name, d.happinessRank)
+                prevProps.setCountry(d)
             })
-
-
     }
 
-  render() {
-    const filteredData = this.state
-    if (!filteredData) {
-        return null
+    render() {
+        const { classes } = this.props
+        return (
+            <div className={classes.wrapper}>
+                <svg className={classes.map} ref="achor" id="anchor"  viewBox={`165 0 ${window.innerWidth/2} ${window.innerHeight}`}/>
+            </div>
+        )
     }
-    return <g ref="achor" id="anchor" />
-      }
 }
+
+export default withStyles(styles)(Map)

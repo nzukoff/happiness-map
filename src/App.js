@@ -1,19 +1,17 @@
-import React, { Component } from 'react';
-import Map from './components/Map/Map'
+import React from 'react';
+import Viz from './components/Viz/Viz'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 
-class App extends Component {
-  render() {
-    const margin = {top: 50,bottom: 50,left: 50,right: 50}
-    const width = 1200 - margin.left - margin.right 
-    const height = 600 - margin.top - margin.bottom
-    return (
+const theme = createMuiTheme({
+  typography: { fontFamily: "'Questrial', sans-serif", useNextVariants: true },
+})
+
+export default function App() {
+  return (
+    <MuiThemeProvider theme={theme}>
       <div className="App">
-        <svg width="1100" height="500">
-          <Map width={width} height={height} margin={margin}/>
-        </svg>        
+        <Viz />
       </div>
-    );
-  }
+    </MuiThemeProvider>
+  );
 }
-
-export default App;
