@@ -6,35 +6,31 @@ import './Map.css';
 export default class Map extends React.Component {
   constructor(props) {
     super(props)
-    // this.logout = this.logout.bind(this);
     this.state = {
         filteredData: []
     }
   } 
 
-    componentWillMount(){
-        d3.queue()
-        .defer(d3.json, './data/world-countries.json')
-        .defer(d3.csv, './data/2017.csv')
-        .await((error, data, happinessData)=>{
-            let countries = topojson.feature(data, data.objects.countries1).features
-            let filteredData = countries.map((d) => {        
-                happinessData.forEach((c) => {
-                    if (c.country == d.properties.name) {
-                        d.happinessRank = c.happiness_rank
-                        d.happinessScore = c.happiness_score
-                        d.gdp = c.gdp_per_capita
-                        d.family = c.family
-                        d.lifeExpectancy = c.life_expectancy
-                        d.freedom = c.freedom
-                        d.generosity = c.generosity
-                        d.governmentCorruption = c.government_corruption
-                    }  
-                })
-                return d
+    componentDidMount = async () => {
+        const jdata = await d3.json('./data/world-countries.json')
+        const cdata = await d3.csv('./data/2017.csv')
+        let countries = topojson.feature(jdata, jdata.objects.countries1).features
+        let filteredData = countries.map((d) => {        
+            cdata.forEach((c) => {
+                if (c.country === d.properties.name) {
+                    d.happinessRank = c.happiness_rank
+                    d.happinessScore = c.happiness_score
+                    d.gdp = c.gdp_per_capita
+                    d.family = c.family
+                    d.lifeExpectancy = c.life_expectancy
+                    d.freedom = c.freedom
+                    d.generosity = c.generosity
+                    d.governmentCorruption = c.government_corruption
+                }  
             })
-            this.setState({filteredData})
+            return d
         })
+        this.setState({filteredData})
     }
 
 
@@ -44,6 +40,7 @@ export default class Map extends React.Component {
         console.log("W IS ", width)
         console.log("H IS ", height)
         console.log("M IS ", margin)
+
 
         let svg = d3.selectAll("#anchor")
             .attr("transform", `translate(${margin.left},${margin.top})`)
@@ -86,13 +83,8 @@ export default class Map extends React.Component {
 
     }
 
-//   logout() {
-//     localStorage.clear();
-//   }
-
   render() {
     const filteredData = this.state
-    console.log(filteredData)
     if (!filteredData) {
         return null
     }
