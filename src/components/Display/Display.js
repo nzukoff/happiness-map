@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import { makeStyles } from '@material-ui/core/styles'
 import { Typography } from '@material-ui/core/'
+import BarChart from '../BarChart/BarChart'
 
 const useStyles = makeStyles(theme => ({
   country: {
@@ -14,18 +15,28 @@ const useStyles = makeStyles(theme => ({
 
 export default function Display(props) {
   const classes = useStyles();
-  const { country } = props
+  const { data, country } = props
+  // console.log(country)
   return (
     <div className="Display">
       {
         props.country ? 
-        <Typography variant="body1" className={classes.country}>
-          {country.properties.name}
-        </Typography>
+        <Fragment>
+          <BarChart data={data} country={country}/>
+            <Typography variant="body1" className={classes.country}>
+              {country.properties.name}
+            </Typography>
+            {/* {
+              country.happinessRank ? 
+                <Typography variant="body1" className={classes.country}>
+                  {country.happinessRank}
+                </Typography>
+                :
+                null
+            } */}
+        </Fragment>
         :
-          <Typography >
-            no country
-          </Typography>
+          null
       }
     </div>
   );

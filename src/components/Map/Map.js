@@ -16,42 +16,23 @@ const styles = theme => ({
   });
 
 class Map extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-        filteredData: []
-    }
-  } 
-
-    componentDidMount = async () => {
-        const jdata = await d3.json('./data/world-countries.json')
-        const cdata = await d3.csv('./data/2017.csv')
-        let countries = topojson.feature(jdata, jdata.objects.countries1).features
-        let filteredData = countries.map((d) => {        
-            cdata.forEach((c) => {
-                if (c.country === d.properties.name) {
-                    d.happinessRank = c.happiness_rank
-                    d.happinessScore = c.happiness_score
-                    d.gdp = c.gdp_per_capita
-                    d.family = c.family
-                    d.lifeExpectancy = c.life_expectancy
-                    d.freedom = c.freedom
-                    d.generosity = c.generosity
-                    d.governmentCorruption = c.government_corruption
-                }  
-            })
-            return d
-        })
-        this.setState({filteredData})
-    }
-
-
-
-    componentDidUpdate(prevProps){
-        let svg = d3.selectAll("#anchor")
+    render() {
+        const { data, classes, setCountry } = this.props
+        // console.log(data)
+        let svg = d3.selectAll("#anchor1")
             // .attr("transform", `translate(0,${window.innerHeight/4})`)
         
-        let sortedData = this.state.filteredData.sort((a, b) => {return a.happinessRank-b.happinessRank})
+        let sortedData = data.sort((a, b) => {
+            if (a.happinessRank === undefined) {
+                return 1;
+            }
+            else if (b.happinessRank === undefined) {
+                return -1;
+            }
+            else { 
+                return parseInt(a.happinessRank) < parseInt(b.happinessRank) ? 1 : -1;
+            }
+        })
 
         let colorScale = d3.scaleSequential(d3.interpolateViridis).domain([0,151])
         // let colorScale = d3.scaleLinear()
@@ -82,15 +63,11 @@ class Map extends React.Component {
             })
             .on('mouseout', function(d) {d3.select(this).classed("selected", false)})
             .on('click', function(d) {
-                prevProps.setCountry(d)
+                setCountry(d)
             })
-    }
-
-    render() {
-        const { classes } = this.props
         return (
             <div className={classes.wrapper}>
-                <svg className={classes.map} ref="achor" id="anchor"  viewBox={`165 0 ${window.innerWidth/2} ${window.innerHeight}`}/>
+                <svg className={classes.map} ref="achor" id="anchor1"  viewBox={`165 0 ${window.innerWidth/2} ${window.innerHeight}`}/>
             </div>
         )
     }
