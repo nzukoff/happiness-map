@@ -1,7 +1,6 @@
 import React, {Fragment, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles'
 import { IconButton, Menu, MenuItem } from '@material-ui/core/'
-import BarChart from '../BarChart/BarChart'
 import Sort from '@material-ui/icons/Sort'
 
 
@@ -20,21 +19,15 @@ export default function Display(props) {
   const { changeOrder } = props
   const [anchorEl, setAnchorEl] = useState(null)
 
-
-
   const handleClose = () => {
-    // this.setState({ anchorEl: null })
     setAnchorEl(null) 
   }
 
   const handleClick = event => {
-    // this.setState({ anchorEl: event.currentTarget })
     setAnchorEl(event.currentTarget )
   }
 
-  // console.log(country)
   return (
-    // <div className="Display">
     <Fragment>
       <IconButton onClick={(e) => handleClick(e)} id="SortButton">
             <Sort />
@@ -50,6 +43,5 @@ export default function Display(props) {
             <MenuItem id='descending' onClick={() => {handleClose();changeOrder('descending')}}>Descending</MenuItem>
           </Menu>
     </Fragment>
-    // </div>
   );
 }
