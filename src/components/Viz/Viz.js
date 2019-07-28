@@ -56,7 +56,7 @@ export default function Viz(props) {
           <Map setCountry={setCountry} data={data} />
         </Grid>
         <Grid item className={classes.display} xs={12} md={6}>
-          <Display data={data} country={country}/>
+          <Display data={data} country={country} />
         </Grid>
       </Grid>
     </div>
