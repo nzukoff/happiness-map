@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-export default function Display(props) {
+export default function ChartMenu(props) {
   const classes = useStyles();
   const { changeOrder } = props
   const [anchorEl, setAnchorEl] = useState(null)
@@ -28,20 +28,20 @@ export default function Display(props) {
   }
 
   return (
-    <Fragment>
+    <div style={{'border':'black solid'}}>
       <IconButton onClick={(e) => handleClick(e)} id="SortButton">
-            <Sort />
-          </IconButton>
-          <Menu
-            id='SortMenu'
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={() => handleClose()}
-          >
-            <MenuItem id='random' onClick={() => {handleClose();changeOrder('random')}}>Random</MenuItem>
-            <MenuItem id='ascending' onClick={() => {handleClose();changeOrder('ascending')}}>Ascending</MenuItem>
-            <MenuItem id='descending' onClick={() => {handleClose();changeOrder('descending')}}>Descending</MenuItem>
-          </Menu>
-    </Fragment>
+        <Sort />
+      </IconButton>
+      <Menu
+        id='SortMenu'
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={() => handleClose()}
+      >
+        <MenuItem id='random' onClick={() => {handleClose();changeOrder('random')}}>Random</MenuItem>
+        <MenuItem id='ascending' onClick={() => {handleClose();changeOrder('ascending')}}>Ascending</MenuItem>
+        <MenuItem id='descending' onClick={() => {handleClose();changeOrder('descending')}}>Descending</MenuItem>
+      </Menu>
+    </div >
   );
 }

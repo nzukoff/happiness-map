@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Typography } from '@material-ui/core/'
 import BarChart from '../BarChart/BarChart'
 import ChartMenu from '../ChartMenu/ChartMenu'
+import ViewMenu from '../ViewMenu/ViewMenu'
 
 
 const useStyles = makeStyles(theme => ({
@@ -48,13 +49,11 @@ export default function Display(props) {
   return (
     <div className="Display">
       {
-        props.country ? 
+        country ? 
         <Fragment>
-          <Typography variant="body1" className={classes.country}>
-            {country.properties.name}
-          </Typography>
-          <BarChart data={chartData} country={country} orderType={orderType}/>
+          <ViewMenu country={country}/>
           <ChartMenu changeOrder={changeOrder} />
+          <BarChart data={chartData} country={country} orderType={orderType}/>
         </Fragment>
         :
           null

@@ -9,6 +9,7 @@ const useStyles = makeStyles(theme => ({
   },
   wrapper: {
     position: 'relative',
+    marginRight: 16
   }
 }))
 
@@ -29,7 +30,7 @@ export default function BarChart(props) {
 
   const margin = {top: 20, right: 0, bottom: 30, left: 40}
   const width = window.innerWidth/2
-  const height = window.innerHeight*.6
+  const height = window.innerHeight*.7
 
   const x = d3.scaleBand()
   .domain(data.map(d => d.properties.name))
