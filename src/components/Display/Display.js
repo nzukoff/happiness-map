@@ -4,6 +4,7 @@ import { Typography } from '@material-ui/core/'
 import BarChart from '../BarChart/BarChart'
 import ChartMenu from '../ChartMenu/ChartMenu'
 import ViewMenu from '../ViewMenu/ViewMenu'
+import RadarPlot from '../RadarPlot/RadarPlot'
 
 
 const useStyles = makeStyles(theme => ({
@@ -20,6 +21,7 @@ export default function Display(props) {
   const classes = useStyles();
   const [orderType, setOrderType] = useState('random')
   const [chartData, setChartData] = useState([])
+  const [chartType, setChartType] = useState(null)
   const { data, country } = props
   
   useEffect(() => {
@@ -45,15 +47,23 @@ export default function Display(props) {
       return dataCopy.sort((a,b) => parseInt(a.happinessRank) < parseInt(b.happinessRank) ? 1 : -1)
     }
   }
-
   return (
     <div className="Display">
       {
         country ? 
         <Fragment>
-          <ViewMenu country={country}/>
+          <ViewMenu country={country} setChartType={setChartType}/>
+          {chartType ? 
           <ChartMenu changeOrder={changeOrder} />
-          <BarChart data={chartData} country={country} orderType={orderType}/>
+          : null}
+          {
+            chartType === 'bar' ? 
+            <BarChart data={chartData} country={country} orderType={orderType}/>
+            : 
+            chartType === 'radar' ? 
+            <RadarPlot data={chartData} country={country}/> 
+            : null
+          }
         </Fragment>
         :
           null

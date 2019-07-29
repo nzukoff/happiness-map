@@ -1,7 +1,8 @@
 import React, {Fragment, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles'
 import { Grid, IconButton, Menu, MenuItem, Typography } from '@material-ui/core/'
-import Sort from '@material-ui/icons/Sort'
+import BarChart from '@material-ui/icons/BarChart'
+import PieChart from '@material-ui/icons/PieChart'
 
 const useStyles = makeStyles(theme => ({
   country: {
@@ -14,7 +15,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function ViewMenu(props) {
   const classes = useStyles();
-  const { country } = props
+  const { country, setChartType } = props
   const [anchorEl, setAnchorEl] = useState(null)
 
   const handleClose = () => {
@@ -34,17 +35,21 @@ export default function ViewMenu(props) {
           </Typography>
         </Grid>
         <Grid item xs={6} >
-          <IconButton onClick={(e) => handleClick(e)} id="SortButton">
-            <Sort />
+          {/* <IconButton onClick={(e) => handleClick(e)} id="BarChart"> */}
+          <IconButton onClick={() => setChartType('bar')} id="BarChart">
+            <BarChart />
           </IconButton>
-          <Menu
+          <IconButton onClick={() => setChartType('radar')}>
+            <PieChart />
+          </IconButton>
+          {/* <Menu
             id='SortMenu'
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
             onClose={() => handleClose()}
           >
             <MenuItem id='nothing' onClick={() => {return}}>nothing</MenuItem>
-          </Menu>
+          </Menu> */}
         </Grid>
       </Grid>
     </Fragment>
