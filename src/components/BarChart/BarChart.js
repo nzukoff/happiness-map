@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function BarChart(props) {
-  const { country, data, orderType } = props
+  const { country, data, orderType, colorScale } = props
 
   useEffect(() => {
     makeChart(country, data)
@@ -72,7 +72,10 @@ export default function BarChart(props) {
       d3.selectAll("#barchart")
         .select("#" + prevCountry.properties.name)
           .classed("countrySelected", false)
-          .attr("fill", "steelblue")  
+          .attr('fill', d => {
+            const color = d3.selectAll(`.${prevCountry.properties.name.replace(/\s/g,'').toLowerCase()}`).attr("fill")
+            return color
+          })
     } else {
       return
     }
@@ -98,11 +101,14 @@ export default function BarChart(props) {
     .attr("viewBox", [0, 0, width, height]);
 
     svg.append("g")
-        .attr("fill", "steelblue")
         .selectAll("rect")
         .data(data)
       .join("rect")
         .style("mix-blend-mode", "multiply")
+        .attr('fill', d => {
+          const color = d3.selectAll(`.${d.properties.name.replace(/\s/g,'').toLowerCase()}`).attr("fill")
+          return color
+        })
         .attr("class", d => 'bar')
         .attr("x", d => x(d.properties.name))
         .attr("y", d => y(d.happinessRank))

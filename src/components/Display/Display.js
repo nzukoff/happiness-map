@@ -1,28 +1,28 @@
 import React, {Fragment, useState, useEffect} from 'react';
-import { makeStyles } from '@material-ui/core/styles'
-import { Typography } from '@material-ui/core/'
+// import { makeStyles } from '@material-ui/core/styles'
+// import { Typography } from '@material-ui/core/'
 import BarChart from '../BarChart/BarChart'
 import ChartMenu from '../ChartMenu/ChartMenu'
 import ViewMenu from '../ViewMenu/ViewMenu'
 import RadarPlot from '../RadarPlot/RadarPlot'
 
 
-const useStyles = makeStyles(theme => ({
-  country: {
-    // marginBottom: theme.spacing(4)
-  },
-  // display: {
-  //   marginBottom: theme.spacing(4)
-  // }
-}))
+// const useStyles = makeStyles(theme => ({
+//   country: {
+//     // marginBottom: theme.spacing(4)
+//   },
+//   // display: {
+//   //   marginBottom: theme.spacing(4)
+//   // }
+// }))
 
 
 export default function Display(props) {
-  const classes = useStyles();
+  // const classes = useStyles();
   const [orderType, setOrderType] = useState('random')
   const [chartData, setChartData] = useState([])
   const [chartType, setChartType] = useState(null)
-  const { data, country } = props
+  const { data, country, colorScale } = props
   
   useEffect(() => {
     setChartData(sortData('random', data.filter(d => d.happinessRank)))
@@ -58,7 +58,7 @@ export default function Display(props) {
           : null}
           {
             chartType === 'bar' ? 
-            <BarChart data={chartData} country={country} orderType={orderType}/>
+            <BarChart data={chartData} country={country} orderType={orderType} colorScale={colorScale}/>
             : 
             chartType === 'radar' ? 
             <RadarPlot data={chartData} country={country}/> 

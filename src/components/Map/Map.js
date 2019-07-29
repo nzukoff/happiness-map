@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Map(props) {
     const classes = useStyles();
-    const { data, setCountry } = props
+    const { data, setCountry, colorScale } = props
 
     let svg = d3.selectAll("#anchor1")
         // .attr("transform", `translate(0,${window.innerHeight/4})`)
@@ -34,12 +34,6 @@ export default function Map(props) {
         }
     })
 
-    let colorScale = d3.scaleSequential(d3.interpolateViridis).domain([0,151])
-    // let colorScale = d3.scaleLinear()
-    // .domain([1, 151])
-    // .range(["#CE8AAF", "#450026"])
-    // .interpolate(d3.interpolateHsl);
-    
     let projection = d3.geoMercator()
         .scale(100)
     
@@ -50,7 +44,7 @@ export default function Map(props) {
     .data(sortedData)
     .enter()
         .append('path')
-        .attr('class', 'country')
+        .attr("class", d => `country ${d.properties.name.replace(/\s/g,'').toLowerCase()}`)
         .attr('d', path)
         .attr('fill', function(d, i) {
             if (d.happinessRank) {return colorScale(i)}

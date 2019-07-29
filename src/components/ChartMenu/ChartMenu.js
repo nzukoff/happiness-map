@@ -1,21 +1,21 @@
-import React, {Fragment, useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles'
+import React, {useState} from 'react';
+// import { makeStyles } from '@material-ui/core/styles'
 import { IconButton, Menu, MenuItem } from '@material-ui/core/'
 import Sort from '@material-ui/icons/Sort'
 
 
-const useStyles = makeStyles(theme => ({
-  country: {
-    // marginBottom: theme.spacing(4)
-  },
-  // display: {
-  //   marginBottom: theme.spacing(4)
-  // }
-}))
+// const useStyles = makeStyles(theme => ({
+//   country: {
+//     // marginBottom: theme.spacing(4)
+//   },
+//   // display: {
+//   //   marginBottom: theme.spacing(4)
+//   // }
+// }))
 
 
 export default function ChartMenu(props) {
-  const classes = useStyles();
+  // const classes = useStyles();
   const { changeOrder } = props
   const [anchorEl, setAnchorEl] = useState(null)
 

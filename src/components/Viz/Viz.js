@@ -19,6 +19,7 @@ const useStyles = makeStyles(theme => ({
 export default function Viz(props) {
   const [data, setData] = useState([])
   const [country, setCountry] = useState(null)
+  const [colorScale, setColorScale] = useState(() => d3.scaleSequential(d3.interpolateViridis).domain([0,151]))
 
   useEffect(() => {
     (async function() {
@@ -53,10 +54,13 @@ export default function Viz(props) {
       </Grid> */}
       <Grid container >
         <Grid className={classes.gif} item xs={12} md={6}>
-          <Map setCountry={setCountry} data={data} />
+          {
+            colorScale ? 
+          <Map setCountry={setCountry} data={data} colorScale={colorScale}/> : null
+          }
         </Grid>
         <Grid item className={classes.display} xs={12} md={6}>
-          <Display data={data} country={country} />
+          <Display data={data} country={country} colorScale={colorScale}/>
         </Grid>
       </Grid>
     </div>

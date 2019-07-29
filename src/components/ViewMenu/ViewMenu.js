@@ -1,6 +1,6 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment} from 'react';
 import { makeStyles } from '@material-ui/core/styles'
-import { Grid, IconButton, Menu, MenuItem, Typography } from '@material-ui/core/'
+import { Grid, IconButton, Typography } from '@material-ui/core/'
 import BarChart from '@material-ui/icons/BarChart'
 import PieChart from '@material-ui/icons/PieChart'
 
@@ -16,15 +16,15 @@ const useStyles = makeStyles(theme => ({
 export default function ViewMenu(props) {
   const classes = useStyles();
   const { country, setChartType } = props
-  const [anchorEl, setAnchorEl] = useState(null)
+  // const [anchorEl, setAnchorEl] = useState(null)
 
-  const handleClose = () => {
-    setAnchorEl(null) 
-  }
+  // const handleClose = () => {
+  //   setAnchorEl(null) 
+  // }
 
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget )
-  }
+  // const handleClick = event => {
+  //   setAnchorEl(event.currentTarget )
+  // }
 
   return (
     <Fragment>
